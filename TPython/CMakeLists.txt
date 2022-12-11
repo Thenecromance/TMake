@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 
+SET_MODULE(TPython)
+
 # Set the CMP0140 policy to NEW
-message("Import TPython module")
 
 # prepare to use python
 macro(SET_PYTHON)
@@ -41,6 +42,8 @@ function(TPythonRun python_file result)
         OUTPUT_VARIABLE OutputVal
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    TLog("Python" ${OutputVal})
+    TLog_(${OutputVal})
     return_(result RetVal)
 endfunction(TPythonRun)
+
+UN_SET()

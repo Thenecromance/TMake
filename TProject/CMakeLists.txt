@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 
-message("Import TProject module")
+SET_MODULE(TProject)
 
 macro(SETUP_GROUPS src_files)
     foreach(FILE ${src_files})
@@ -36,17 +36,17 @@ macro(TProjectBuild prj_name)
     include_directories(src)
 
     if(${TBUILD_STATIC} AND ${TBUILD_SHARED})
-        LOG_ERROR("TBUILD_STATIC and TBUILD_SHARED should not be both true")
+        TLog_("TBUILD_STATIC and TBUILD_SHARED should not be both true")
     endif()
 
     if(${TBUILD_STATIC})
-        LOG_INFO("TProject" "${PROJECT_NAME} compile as static lib")
+        TLog_("${PROJECT_NAME} compile as static lib")
         add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${HEADER_FILES})
     elseif(${TBUILD_SHARED})
-        LOG_INFO("TProject" "${PROJECT_NAME} compile as shared lib")
+        TLog_("${PROJECT_NAME} compile as shared lib")
         add_library(${PROJECT_NAME} SHARED ${SRC_FILES} ${HEADER_FILES})
     else()
-        LOG_INFO("TProject" "${PROJECT_NAME} compile as executeable")
+        TLog_("${PROJECT_NAME} compile as executeable")
         add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
     endif()
 

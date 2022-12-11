@@ -12,7 +12,7 @@ TINCLUDE(TMacro)
 TINCLUDE(TLog) # Logs
 TINCLUDE(TProject) # more easy way to build Project and subproject
 TINCLUDE(TPython) # execute python script project
-
+TINCLUDE(TConfigFile)
 # ignore the CRT_SECURE_WARNING for WIN32
 macro(IGNORE_CRT_WARNING)
     if(WIN32)
@@ -27,6 +27,18 @@ macro(SET_CXX_VERSION ver)
     set(CXXVERSION ${ver})
 endmacro()
 
+# # # ##############################
+# project(ConfigFileTest)
+# TConfigFileStart(config)
+# TConfigFileSet(Author "Thenecromance")
+# TConfigFileSet(Major 1)
+# TConfigFileSet(Minor 1)
+# TConfigFileSetNone(Test)
+# # TConfigFileAuto()
+# TConfigFileWrite()
+# # TConfigFileDebug()
+
+# # # ##############################
 
 # # ##############################
 # # Python Test Case
@@ -36,3 +48,4 @@ endmacro()
 # endif()
 # message(${CMAKE_CURRENT_SOURCE_DIR})
 # # ##############################
+
