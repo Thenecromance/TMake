@@ -5,7 +5,8 @@ SET_MODULE(TConfigFile)
 macro(TConfigFileStart config_name)
     TLog_("Start")
 
-    set(configName ${config_name}.h CACHE STRING "")
+    set(configName "${PROJECT_SOURCE_DIR}/${config_name}.h")
+    TLog_(${configName})
 endmacro()
 
 # set the arg define with value
@@ -24,7 +25,7 @@ endmacro(TConfigFileSetNone key)
 # write all the configureation to the ${configName}.h.in
 macro(TConfigFileWrite)
     TLog_("start to write the ${configName}")
-    configure_file(${configName}.in ${configName} @ONLY)
+    configure_file("${configName}.in" "${configName}" @ONLY)
     TConfigFileRelease()
 endmacro()
 
