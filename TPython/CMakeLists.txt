@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.17)
 
 # Set the CMP0140 policy to NEW
 message("Import TPython module")

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.17)
 
 # set the Default version for all subproject
 set(CXXVERSION 17)
@@ -26,6 +26,7 @@ macro(SET_CXX_VERSION ver)
     LOG_INFO("BaseModule" "Set CXX Version ${ver}")
     set(CXXVERSION ${ver})
 endmacro()
+
 
 # # ##############################
 # # Python Test Case
