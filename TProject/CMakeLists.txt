@@ -67,3 +67,23 @@ macro(SETUP_APP prj_name)
         set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
     endif()
 endmacro()
+
+
+# set project compile as executeable
+macro(TBUILD_EXE prjname)
+    SETUP_APP(${prjname})
+endmacro(TBUILD_EXE)
+
+# set project compile as static lib
+macro(TBUILD_LIB prjname)
+    set(TBUILD_STATIC TRUE)
+    set(TBUILD_SHARED FALSE)
+    SETUP_APP(${prjname})
+endmacro(TBUILD_LIB prjname)
+
+# set project compile as shared lib
+macro(TBUILD_SHARED prjname)
+    set(TBUILD_STATIC FALSE)
+    set(TBUILD_SHARED TRUE)
+    SETUP_APP(${prjname})
+endmacro(TBUILD_SHARED prjname)

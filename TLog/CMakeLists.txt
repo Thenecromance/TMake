@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(SHOW_LOG TRUE)
+
+# this module is for wrap the message(...) 
+# just because some wrong message sometimes is too 
+# difficult to find in Cmake log 
+
+
+set(SHOW_LOG TRUE CACHE BOOL "")
+
 message("Import TLog module")
 
 macro(LOG_INFO module text)
@@ -19,6 +26,7 @@ macro(LOG_ERROR module message)
     endif()
 endmacro()
 
+#only print a new Line 
 macro(EMPTY_LINE)
     if(${SHOW_LOG})
         message("")
