@@ -6,17 +6,17 @@ SET_MODULE("TLog")
 # difficult to find in Cmake log
 set(SHOW_LOG TRUE CACHE BOOL "")
 
-function(TLog module text)
+function(TLog module msg)
     if(${SHOW_LOG})
         string(TIMESTAMP cur_time "%H:%M:%S")
-        message("[TMAKE][${module}][INFO][${cur_time}]:${text}")
+        message("[TMAKE][${module}][INFO][${cur_time}]:${msg}")
     endif()
 endfunction()
 
-function(TLogError module message)
+function(TLogError module msg)
     if(${SHOW_LOG})
         string(TIMESTAMP cur_time "%H:%M:%S")
-        message(WARNING "\n[TMAKE][${module}][ERROR][${cur_time}]:${text}")
+        message(WARNING "\n[TMAKE][${module}][ERROR][${cur_time}]:${msg}")
     endif()
 endfunction()
 
