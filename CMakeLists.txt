@@ -5,7 +5,7 @@ set(CXXVERSION 17)
 
 # using a easy way to include the other CMakeLists.txt
 macro(TINCLUDE file)
-    include(./TMake/${file}/CMakeLists.txt)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/${file}/CMakeLists.txt)
 endmacro(TINCLUDE file)
 
 TINCLUDE(TMacro)
@@ -31,7 +31,7 @@ endmacro()
 # # Python Test Case
 # TPythonSupport(bSupport)
 # if(${bSupport})
-#     TPythonRun("${CMAKE_CURRENT_SOURCE_DIR}\\Test\\HelloWorld.py" result )
+# TPythonRun("${CMAKE_CURRENT_SOURCE_DIR}\\Test\\HelloWorld.py" result )
 # endif()
 # message(${CMAKE_CURRENT_SOURCE_DIR})
 # # ##############################
