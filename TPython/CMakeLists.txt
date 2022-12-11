@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 # Set the CMP0140 policy to NEW
 message("Import TPython module")
 
-cmake_policy(SET CMP0140 NEW)
-
-
 # prepare to use python
 macro(SET_PYTHON)
     if(NOT DEFINED PYTHON_EXECUTABLE)
@@ -17,18 +14,33 @@ macro(SET_PYTHON)
     endif()
 endmacro(SET_PYTHON)
 
-# #
-function(check_python_support result)
-    run_python("--version" RetVal)
-    return_(result RetVal)
-endfunction(check_python_support)
+# check this system does not support the python
+# ``result``: if support it will return TRUE else return FALSE
+function(TPythonSupport result)
+    TPythonRun("--version" RetVal _)
 
-function(run_python python_file result)
+    if(NOT ${RetVal} EQUAL 0)
+        set(RetVal FALSE)
+    else()
+        set(RetVal TRUE)
+    endif()
+
+    return_(result RetVal)
+endfunction(TPythonSupport)
+
+# run Python script file with return value
+# ``python_file``: script file
+# ``result``: the python's return value
+function(TPythonRun python_file result)
     SET_PYTHON()
+
     execute_process(
         COMMAND ${PYTHON_EXECUTABLE} ${python_file}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         RESULT_VARIABLE RetVal
+        OUTPUT_VARIABLE OutputVal
+        OUTPUT_STRIP_TRAILING_WHITESPACE
     )
+    TLog("Python" ${OutputVal})
     return_(result RetVal)
-endfunction(run_python)
+endfunction(TPythonRun)

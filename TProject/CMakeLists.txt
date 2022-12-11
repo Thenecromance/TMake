@@ -25,7 +25,7 @@ macro(SET_OUTPUT_NAMES prj_name)
     endif()
 endmacro()
 
-macro(SETUP_APP prj_name)
+macro(TProjectBuild prj_name)
     set(FOLDER_NAME ${prj_name})
     set(PROJECT_NAME ${prj_name})
     project(${PROJECT_NAME} CXX)
@@ -68,22 +68,21 @@ macro(SETUP_APP prj_name)
     endif()
 endmacro()
 
-
 # set project compile as executeable
 macro(TBUILD_EXE prjname)
-    SETUP_APP(${prjname})
+    TProjectBuild(${prjname})
 endmacro(TBUILD_EXE)
 
 # set project compile as static lib
 macro(TBUILD_LIB prjname)
     set(TBUILD_STATIC TRUE)
     set(TBUILD_SHARED FALSE)
-    SETUP_APP(${prjname})
+    TProjectBuild(${prjname})
 endmacro(TBUILD_LIB prjname)
 
 # set project compile as shared lib
 macro(TBUILD_SHARED prjname)
     set(TBUILD_STATIC FALSE)
     set(TBUILD_SHARED TRUE)
-    SETUP_APP(${prjname})
+    TProjectBuild(${prjname})
 endmacro(TBUILD_SHARED prjname)
