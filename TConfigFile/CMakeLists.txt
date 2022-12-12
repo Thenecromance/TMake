@@ -3,10 +3,12 @@ SET_MODULE(TConfigFile)
 
 # start to configureation files
 macro(TConfigFileStart config_name)
-    TLog_("Start")
-
-    set(configName "${PROJECT_SOURCE_DIR}/${config_name}.h")
-    TLog_(${configName})
+    if((NOT EXISTS "${PROJECT_SOURCE_DIR}/${config_name}.h" OR NOT EXISTS "${PROJECT_SOURCE_DIR}/${config_name}.h.in"))
+        TLogError_("${config_name}.h or ${config_name}.h.in file does not exists")
+    else()
+        set(configName "${PROJECT_SOURCE_DIR}/${config_name}.h")
+        TLog_(${configName})
+    endif()
 endmacro()
 
 # set the arg define with value

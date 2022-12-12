@@ -30,13 +30,13 @@ function(TPythonSupport result)
 endfunction(TPythonSupport)
 
 # run Python script file with return value
-# ``python_file``: script file
+# ``python``: script file
 # ``result``: the python's return value
-function(TPythonRun python_file result)
+function(TPythonRun python result)
     SET_PYTHON()
 
     execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} ${python_file}
+        COMMAND ${PYTHON_EXECUTABLE} ${python}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         RESULT_VARIABLE RetVal
         OUTPUT_VARIABLE OutputVal

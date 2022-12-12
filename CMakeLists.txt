@@ -14,32 +14,18 @@ TINCLUDE(TProject) # more easy way to build Project and subproject
 TINCLUDE(TPython) # execute python script project
 TINCLUDE(TConfigFile)
 
-# ignore the CRT_SECURE_WARNING for WIN32
-macro(IGNORE_CRT_WARNING)
-    if(WIN32)
-        add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-        TLog("BaseModule" "Ignoring the CRT SECURE WARNING")
-    endif()
-endmacro()
+# # ##############################
+project(ConfigFileTest)
+TConfigFileStart(config)
+TConfigFileSet(Author "Thenecromance")
+TConfigFileSet(Major 1)
+TConfigFileSet(Minor 1)
+TConfigFileSetNone(Test)
+# TConfigFileAuto()
+TConfigFileWrite()
+# TConfigFileDebug()
 
-# set CXX VERSION for all sub project
-macro(SET_CXX_VERSION ver)
-    TLog("BaseModule" "Set CXX Version ${ver}")
-    set(CXXVERSION ${ver})
-endmacro()
-
-# # # ##############################
-# project(ConfigFileTest)
-# TConfigFileStart(config)
-# TConfigFileSet(Author "Thenecromance")
-# TConfigFileSet(Major 1)
-# TConfigFileSet(Minor 1)
-# TConfigFileSetNone(Test)
-# # TConfigFileAuto()
-# TConfigFileWrite()
-# # TConfigFileDebug()
-
-# # # ##############################
+# # ##############################
 
 # # ##############################
 # # Python Test Case
