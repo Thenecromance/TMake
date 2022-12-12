@@ -14,24 +14,23 @@ TINCLUDE(TProject) # more easy way to build Project and subproject
 TINCLUDE(TPython) # execute python script project
 TINCLUDE(TConfigFile)
 
-# # ##############################
-project(ConfigFileTest)
-TConfigFileStart(config)
-TConfigFileSet(Author "Thenecromance")
-TConfigFileSet(Major 1)
-TConfigFileSet(Minor 1)
-TConfigFileSetNone(Test)
+# ##############################
+# project(ConfigFileTest)
+# TConfigFileStart(config)
+# TConfigFileSet(Author "Thenecromance")
+# TConfigFileSet(Major 1)
+# TConfigFileSet(Minor 1)
+# TConfigFileSetNone(Test)
 # TConfigFileAuto()
-TConfigFileWrite()
+# TConfigFileWrite()
 # TConfigFileDebug()
+# ##############################
 
-# # ##############################
-
-# # ##############################
-# # Python Test Case
+# ##############################
+# #Python Test Case
 # TPythonSupport(bSupport)
 # if(${bSupport})
 # TPythonRun("${CMAKE_CURRENT_SOURCE_DIR}\\Test\\HelloWorld.py" result )
 # endif()
 # message(${CMAKE_CURRENT_SOURCE_DIR})
-# # ##############################
+# ##############################
