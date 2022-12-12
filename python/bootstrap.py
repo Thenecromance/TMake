@@ -1,3 +1,8 @@
+#utf-8 
+
+#this script is mainly trying to instead the CMake or .gitmodule or something else 
+#and according to my idea,prepare to let this script support ssl , .git , resources etc
+
 import sys
 import json
 import hashlib
