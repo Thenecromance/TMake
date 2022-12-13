@@ -10,6 +10,7 @@ import urllib
 import ssl
 import os
 import re
+import string
 
 
 try:
@@ -77,15 +78,17 @@ def computeFileHash(filename):
             buf = afile.read(blocksize)
     return hasher.hexdigest()
 
-def useMirrorReplace( url) ->any:
+def useMirrorReplace( url:string) ->any:
     if MIRROR_WRB_LIST is None or MIRROR_WRB_LIST == {}:
         logger.error("You are setting USE_MIRROR as True but not set MIRROR_WRB_LIST, nothing will happend")
-        MIRROR_WRB_LIST= False
+        USE_MIRROR= False
         return url 
     for origin_url,mirror_url in MIRROR_WRB_LIST:
-        url.find(origin_url)
-    
+        if url.find(origin_url) is not -1 :
+            url = url.replace(origin_url, mirror_url)
+            break
     return url 
+
 
 def downloadFile(url, download_dir , sha1_hash = None , force_download = False , user_agent = None ):
     if not os.path.isdir(download_dir):
@@ -129,8 +132,30 @@ def downloadFile(url, download_dir , sha1_hash = None , force_download = False ,
 
     return target_filename
 
-
-
+def readSubRootData(file_name , ignoreFile  =True):
+    """
+    get which subroots' resrouces will be downloaded 
+    """
+    data =  readJSONData(file_name)
+    if data is None: 
+        logger.error("Could not find the " + file_name + " in the root path")
+        return None 
+    sub_path_list = []
+    if ignoreFile is False:
+        logger.info("All the file will be download")
+        
+    for sub_data in data :
+        if (ignoreFile and sub_data["ignore"] is True) is not True:
+            logger.info("Get dir path" + sub_data["path"])
+            if os.path.isdir(sub_data["path"]) is not True:
+                logger.error(sub_data["path"] +"is not a invaild path")
+            else:
+                sub_path_list.append(sub_data["path"])
+            
+    if len(sub_path_list) is 0 :
+        return None 
+    return sub_path_list
+    
 def readJSONData(filename):
     try:
         json_data = open(filename).read()
