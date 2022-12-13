@@ -39,10 +39,9 @@ function(TPythonRun python result)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         RESULT_VARIABLE RetVal
         OUTPUT_VARIABLE OutputVal
-        OUTPUT_STRIP_TRAILING_WHITESPACE
+        
     )
-    set(LogMsg ${OutputVal})
-    TLog_(${LogMsg})
+    message(${OutputVal})
     return_(result RetVal)
 endfunction(TPythonRun)
 

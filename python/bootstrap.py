@@ -39,7 +39,7 @@ try:
             # self.setLevel(logging.DEBUG)
             file_handler = logging.FileHandler('bootstrap.log')
             formatter = logging.Formatter(
-                '[%(asctime)s][%(levelname)s]:%(message)s')
+                '[Monkey][%(asctime)s][%(levelname)s]:%(message)s')
             stream_handler = logging.StreamHandler(sys.stdout)
             file_handler.setFormatter(formatter)
             stream_handler.setFormatter(formatter)
@@ -68,6 +68,7 @@ except ImportError:
         def fatal(self, msg):
             print(msg)
 logger = TLog()
+
 
 # FUCKING DNS cache pollution by some **** reason in ****** and
 # protect me in some pc don't have V*N and speed up for some project
@@ -249,25 +250,24 @@ def readSubRootData(ignoreDir=True):
     data = readJSONData(file_name)
     if data is None:
         logger.error("Could not find the " + file_name + " in the root path")
-        return None
+        exit(255)
     sub_path_list = []
     if ignoreDir is False:
-        logger.info("All the file will be download")
+        logger.warning("All the file will be download")
 
     for sub_data in data:
-        if(ignoreDir):
-            if os.path.isdir(sub_data.get("path")) is not True:
-                logger.error(sub_data.get("path") + " is not a invaild path")
-            elif(sub_data.get("ignore") is False):
-                sub_path_list.append(sub_data.get("path"))
+        if os.path.isdir(sub_data.get("path")) is not True:
+            createSubDirectory(sub_data.get("path"))
+            exit(255)
         else:
-            if os.path.isdir(sub_data.get("path")) is not True:
-                logger.error(sub_data.get("path") + " is not a invaild path")
+            if ignoreDir == True:
+                if sub_data.get("ignore") is False:
+                    sub_path_list.append(sub_data.get("path"))
             else:
                 sub_path_list.append(sub_data.get("path"))
 
     if len(sub_path_list) == 0:
-        return None
+        return exit(255)
     return sub_path_list
 
 
@@ -289,13 +289,13 @@ def readResourceInDir(dir_path):
     config_file = os.path.join(dir_path, "bootstrap.json")
     # check file exist or not
     if not os.path.exists(config_file):
-        logger.error("could not find " + config_file + "in " + dir_path + "!")
-        return None
+        logger.error("could not find " + config_file + " in " + dir_path + "!")
+        exit(255)
     # load data from the json
     data = readJSONData(config_file)
     if data is None:
         logger.error("Invaild json file :" + config_file)
-        return None
+        exit(255)
     for obj in data:
         cloneRepository(
             obj["source"]["type"], obj["source"]["url"],
@@ -303,17 +303,37 @@ def readResourceInDir(dir_path):
         )
 
 
+def createSubDirectory(dir_path):
+    os.mkdir(dir_path)
+
+    bootstrap_file = os.path.join(dir_path, "demo.json")
+    logger.error(
+        dir_path + " is not a invaild path more detail please to see : " + bootstrap_file)
+    data = [
+        {
+            "name": "file name",
+            "source": {
+                "type": "git",
+                "url": "gits",
+                "revision": "0.9.9.8",
+                "user_agent": ""
+            }
+        }
+    ]
+    writeJSONData(data, bootstrap_file)
+
+
 def readJSONData(filename):
     try:
         json_data = open(filename).read()
     except:
         logger.exception("Fail to load Json file:" + filename)
-        return None
+        exit(255)
     try:
         data = json.loads(json_data)
     except:
         logger.exception("Fail to parse Json data")
-        return None
+        exit(255)
     return data
 
 
@@ -325,29 +345,30 @@ def writeJSONData(data, filename):
 def printOptions():
     print("I'm tooooooo lazy")
 
+def cleanupLogFile():
+    if os .path.exists("bootstrap.log"):
+        with open('bootstrap.log','w') as f:
+            f.write("")
+            f.close()
 
 def main(argv):
-    # pass
-    # logger.info("Hello TLoader!")
-    # # cwd = os.getcwd()
-    # # # cwd = os.path.join(cwd,"TMake","python", "bootstrap.py")
-    # # logger.info(f"Current working directory: {cwd}")
-    logger.info(argv)
     try:
         opts, args = getopt.getopt(
             argv,
-            "f:F"
+            "f"
         )
     except getopt.GetoptError:
         printOptions()
         return 0
-
+    
+    
+    cleanupLogFile()
+    logger.info("Monkey is trying to use Python logging~")
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             printOptions()
             return 0
         if opt in ("-f"):
-            logger.info("args is "+arg)
             lists = readSubRootData(arg)
             if lists is not None:
                 for subdir in lists:

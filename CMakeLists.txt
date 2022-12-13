@@ -16,10 +16,11 @@ TINCLUDE(TConfigFile)
 
 function(TRunBootstrap)
     TPythonSupport(result)
-    TLog("Base" "${result}")
     if( ${result} EQUAL FALSE)
         TLogError("Base " "could not support the Python")
     else()
         TPythonRun("TMake//python//TLoader.py" result)
     endif()
 endfunction()
+
+TLog("Monkey" "Monkey Maker! I'm Monkey!")

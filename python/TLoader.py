@@ -43,5 +43,5 @@ cwd = os.getcwd()
 # # cwd = os.path.join(cwd,"TMake","python", "bootstrap.py")
 # print(f"Current working directory: {cwd}")
 
-runScript( os.path.join(cwd,"TMake","python", "bootstrap.py"), "-b deps")
-print("\nInitialize complete!\n")
+runScript( os.path.join(cwd,"TMake","python", "bootstrap.py"), "-f")
+print("\nMonkey Initialize complete!\n")
