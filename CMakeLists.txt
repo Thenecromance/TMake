@@ -8,29 +8,18 @@ macro(TINCLUDE file)
     include(${CMAKE_CURRENT_SOURCE_DIR}/TMake/${file}/CMakeLists.txt)
 endmacro(TINCLUDE file)
 
-TINCLUDE(TMacro)
 TINCLUDE(TLog) # Logs
+TINCLUDE(TMacro)
 TINCLUDE(TProject) # more easy way to build Project and subproject
 TINCLUDE(TPython) # execute python script project
 TINCLUDE(TConfigFile)
 
-# ##############################
-# project(ConfigFileTest)
-# TConfigFileStart(config)
-# TConfigFileSet(Author "Thenecromance")
-# TConfigFileSet(Major 1)
-# TConfigFileSet(Minor 1)
-# TConfigFileSetNone(Test)
-# TConfigFileAuto()
-# TConfigFileWrite()
-# TConfigFileDebug()
-# ##############################
-
-# ##############################
-# #Python Test Case
-# TPythonSupport(bSupport)
-# if(${bSupport})
-# TPythonRun("${CMAKE_CURRENT_SOURCE_DIR}\\Test\\HelloWorld.py" result )
-# endif()
-# message(${CMAKE_CURRENT_SOURCE_DIR})
-# ##############################
+function(TRunBootstrap)
+    TPythonSupport(result)
+    TLog("Base" "${result}")
+    if( ${result} EQUAL FALSE)
+        TLogError("Base " "could not support the Python")
+    else()
+        TPythonRun("TMake//python//TLoader.py" result)
+    endif()
+endfunction()

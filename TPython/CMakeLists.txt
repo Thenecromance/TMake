@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 
 SET_MODULE(TPython)
-
 # Set the CMP0140 policy to NEW
 
 # prepare to use python
@@ -42,7 +41,8 @@ function(TPythonRun python result)
         OUTPUT_VARIABLE OutputVal
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    TLog_(${OutputVal})
+    set(LogMsg ${OutputVal})
+    TLog_(${LogMsg})
     return_(result RetVal)
 endfunction(TPythonRun)
 

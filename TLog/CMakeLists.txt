@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
-SET_MODULE("TLog")
+
+
+
 
 # this module is for wrap the message(...)
 # just because some wrong message sometimes is too
@@ -19,5 +21,3 @@ function(TLogError module msg)
         message(WARNING "\n[TMAKE][${module}][ERROR][${cur_time}]:${msg}")
     endif()
 endfunction()
-
-UN_SET()
