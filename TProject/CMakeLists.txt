@@ -33,6 +33,7 @@ macro(TProjectBuild prj_name)
     file(GLOB_RECURSE HEADER_FILES LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h??)
 
     include_directories(src)
+    include_directories(include)
 
     if(${TBUILD_STATIC} AND ${TBUILD_SHARED})
         TLog_("TBUILD_STATIC and TBUILD_SHARED should not be both true")
