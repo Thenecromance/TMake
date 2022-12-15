@@ -70,11 +70,26 @@ except ImportError:
 logger = TLog()
 
 
+# try:
+#     from progressbar import *
+#     import time
+#     total =1000
+
+#     def do():
+#         time.sleep(0.01)
+#     progressbar = Progressbar()
+#     for i in progressbar(range(1000)):
+#         do()
+
+# except:
+#     logger.warning("current OS does not install the prograssbar")
+
+
 # FUCKING DNS cache pollution by some **** reason in ****** and
 # protect me in some pc don't have V*N and speed up for some project
-USE_MIRROR: bool = False
+USE_MIRROR: bool = True
 MIRROR_WRB_LIST = {
-    #    'github.com':'',
+    'https://github.com/': 'https://kgithub.com/',
     #    'gitlab.com':''
 }
 
@@ -132,17 +147,18 @@ def useMirrorReplace(url: string) -> any:
             "You are setting USE_MIRROR as True but not set MIRROR_WRB_LIST, nothing will happend")
         USE_MIRROR = False
         return url
-    for origin_url, mirror_url in MIRROR_WRB_LIST:
-        if url.find(origin_url) != -1:
+    for origin_url, mirror_url in  MIRROR_WRB_LIST.items():
+        if url.find(origin_url) is not -1:
             url = url.replace(origin_url, mirror_url)
             break
+    logger.info(url)
     return url
 
 
 def downloadFile(url, download_dir, sha1_hash=None, force_download=False, user_agent=None):
     if not os.path.isdir(download_dir):
         os.mkdir(download_dir)
-
+        
     if USE_MIRROR:
         url = useMirrorReplace(url)
 
@@ -185,6 +201,10 @@ def downloadFile(url, download_dir, sha1_hash=None, force_download=False, user_a
 
 
 def cloneRepository(type, url, target_name, revision=None, try_only_local_operations=False):
+    
+    if USE_MIRROR:
+        url = useMirrorReplace(url)  
+    
     target_dir = escapifyPath(target_name)
     target_dir_exists = os.path.exists(target_dir)
     logger.info("Cloning " + url + " to " + target_dir)
@@ -345,11 +365,13 @@ def writeJSONData(data, filename):
 def printOptions():
     print("I'm tooooooo lazy")
 
+
 def cleanupLogFile():
     if os .path.exists("bootstrap.log"):
-        with open('bootstrap.log','w') as f:
+        with open('bootstrap.log', 'w') as f:
             f.write("")
             f.close()
+
 
 def main(argv):
     try:
@@ -360,8 +382,7 @@ def main(argv):
     except getopt.GetoptError:
         printOptions()
         return 0
-    
-    
+
     cleanupLogFile()
     logger.info("Monkey is trying to use Python logging~")
     for opt, arg in opts:
