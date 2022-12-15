@@ -288,6 +288,8 @@ def readSubRootData(ignoreDir=True):
 
     if len(sub_path_list) == 0:
         return exit(255)
+    
+    markFileAsRead(file_name)
     return sub_path_list
 
 
@@ -321,6 +323,7 @@ def readResourceInDir(dir_path):
             obj["source"]["type"], obj["source"]["url"],
             os.path.join(dir_path, obj["name"])
         )
+    markFileAsRead(config_file)
 
 
 def createSubDirectory(dir_path):
@@ -372,6 +375,8 @@ def cleanupLogFile():
             f.write("")
             f.close()
 
+def markFileAsRead(file_name):
+    shutil.copy(file_name,"."+file_name)
 
 def main(argv):
     try:
@@ -396,6 +401,9 @@ def main(argv):
                     readResourceInDir(subdir)
             else:
                 exit(255)
+    
+    
+    
 
 
 if __name__ == "__main__":
