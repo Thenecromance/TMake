@@ -5,7 +5,7 @@ set(CXXVERSION 17)
 
 # using a easy way to include the other CMakeLists.txt
 macro(TINCLUDE file)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/TMake/${file}/CMakeLists.txt)
+    include(${CMAKE_SOURCE_DIR}/TMake/${file}/CMakeLists.txt)
 endmacro(TINCLUDE file)
 
 TINCLUDE(TLog) # Logs

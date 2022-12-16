@@ -147,7 +147,7 @@ def useMirrorReplace(url: string) -> any:
             "You are setting USE_MIRROR as True but not set MIRROR_WRB_LIST, nothing will happend")
         USE_MIRROR = False
         return url
-    for origin_url, mirror_url in  MIRROR_WRB_LIST.items():
+    for origin_url, mirror_url in MIRROR_WRB_LIST.items():
         if url.find(origin_url) is not -1:
             url = url.replace(origin_url, mirror_url)
             break
@@ -158,7 +158,7 @@ def useMirrorReplace(url: string) -> any:
 def downloadFile(url, download_dir, sha1_hash=None, force_download=False, user_agent=None):
     if not os.path.isdir(download_dir):
         os.mkdir(download_dir)
-        
+
     if USE_MIRROR:
         url = useMirrorReplace(url)
 
@@ -201,10 +201,10 @@ def downloadFile(url, download_dir, sha1_hash=None, force_download=False, user_a
 
 
 def cloneRepository(type, url, target_name, revision=None, try_only_local_operations=False):
-    
+
     if USE_MIRROR:
-        url = useMirrorReplace(url)  
-    
+        url = useMirrorReplace(url)
+
     target_dir = escapifyPath(target_name)
     target_dir_exists = os.path.exists(target_dir)
     logger.info("Cloning " + url + " to " + target_dir)
@@ -288,7 +288,7 @@ def readSubRootData(ignoreDir=True):
 
     if len(sub_path_list) == 0:
         return exit(255)
-    
+
     markFileAsRead(file_name)
     return sub_path_list
 
@@ -323,7 +323,7 @@ def readResourceInDir(dir_path):
             obj["source"]["type"], obj["source"]["url"],
             os.path.join(dir_path, obj["name"])
         )
-    markFileAsRead(config_file)
+    markFileAsRead("bootstrap.json")
 
 
 def createSubDirectory(dir_path):
@@ -375,8 +375,12 @@ def cleanupLogFile():
             f.write("")
             f.close()
 
+
 def markFileAsRead(file_name):
-    shutil.copy(file_name,"."+file_name)
+    if os.path.exists("."+file_name) and computeFileHash("."+file_name) == computeFileHash(file_name):
+        os.remove("."+file_name)
+    shutil.copy(file_name, "."+file_name)
+
 
 def main(argv):
     try:
@@ -401,9 +405,6 @@ def main(argv):
                     readResourceInDir(subdir)
             else:
                 exit(255)
-    
-    
-    
 
 
 if __name__ == "__main__":

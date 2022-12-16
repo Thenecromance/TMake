@@ -66,6 +66,7 @@ macro(TProjectBuild prj_name)
     if(MSVC)
         set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
     endif()
+
 endmacro()
 
 # set project compile as executeable
