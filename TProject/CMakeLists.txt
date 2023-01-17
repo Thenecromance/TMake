@@ -24,6 +24,7 @@ macro(SET_OUTPUT_NAMES prj_name)
     endif()
 endmacro()
 
+#build a auto build project, which will auto include all source from src&include directories 
 macro(TProjectBuild prj_name)
     set(FOLDER_NAME ${prj_name})
     set(PROJECT_NAME ${prj_name})
@@ -66,7 +67,6 @@ macro(TProjectBuild prj_name)
     if(MSVC)
         set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
     endif()
-
 endmacro()
 
 # set project compile as executeable
@@ -87,3 +87,13 @@ macro(TBUILD_SHARED prjname)
     set(TBUILD_SHARED TRUE)
     TProjectBuild(${prjname})
 endmacro(TBUILD_SHARED prjname)
+
+#add all sub directories in parent_dir
+#@parent_dir: root directory
+macro(TADD_SUBDIRECTORY parent_dir)
+    file(GLOB_RECURSE DIR_LIST LIST_DIRECTORIES true RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${parent_dir})
+
+    foreach(SUB_DIR ${DIR_LIST})
+        include_directories(${SUB_DIR})
+    endforeach(SUB_DIR ${DIR_LIST})
+endmacro()
