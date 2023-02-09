@@ -210,7 +210,7 @@ class BootstrapLoader:
             return "\"" + path + "\""
         return path.replace("\\ ", " ")
     
-    def downloadFile(self , url, download_dir, sha1_hash=None, force_download=False, user_agent=None):
+    def downloadFile(self , url, download_dir,  file_name = None ,  sha1_hash=None, force_download=False, user_agent=None):
         # if not os.path.isdir(download_dir):
         #     os.mkdir(download_dir)
 
@@ -218,10 +218,14 @@ class BootstrapLoader:
             url = self.useMirrorReplace(url)
 
         p = urlparse(url)
-        # replace special characters in the URL path
-        url = urlunparse([p[0], p[1], quote(p[2]), p[3], p[4], p[5]])
-        filename_rel = os.path.split(p.path)[1]
-        target_filename = os.path.join(download_dir, filename_rel)
+        if file_name is None:
+            # replace special characters in the URL path
+            url = urlunparse([p[0], p[1], quote(p[2]), p[3], p[4], p[5]])
+            filename_rel = os.path.split(p.path)[1]
+            target_filename = os.path.join(download_dir, filename_rel)
+        else:
+            target_filename = os.path.join(download_dir,file_name)
+
         if force_download is False and os.path.exists(target_filename) and sha1_hash is not None and sha1_hash != "":
             hash_file = self.ComputeHash(target_filename)
             if hash_file != sha1_hash:
@@ -328,7 +332,8 @@ class BootstrapLoader:
                     )
             else:
                 self.downloadFile(obj["source"]["url"],
-                    self.default_dir
+                    self.default_dir,
+                                  obj["name"]
                     )
         
         self.MarkAsRead()
