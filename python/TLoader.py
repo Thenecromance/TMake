@@ -39,9 +39,7 @@ if executCommand("cmake --version") != 0:
 if executCommand("git --version") != 0:
     print("No Gits")
     exit(255)
+    
 cwd = os.getcwd()
-# # cwd = os.path.join(cwd,"TMake","python", "bootstrap.py")
-# print(f"Current working directory: {cwd}")
-
-runScript( os.path.join(cwd,"TMake","python", "bootstrap.py"), "-f")
+runScript( os.path.join(cwd,"TMake","python", "bootstrap.py"), cwd)
 print("\nMonkey Initialize complete!\n")
