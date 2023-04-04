@@ -327,8 +327,10 @@ class BootstrapLoader:
         for obj in data:
             if obj["source"]["type"] == "git" or obj["source"]["type"] == "svn":
                 self.cloneRepository(
-                    obj["source"]["type"], obj["source"]["url"],
-                    os.path.join(self.default_dir, obj["name"])
+                   type =  obj["source"]["type"], 
+                   url= obj["source"]["url"],
+                    target_name= os.path.join(self.default_dir, obj["name"]),
+                    revision= obj["source"]["revision"]
                     )
             else:
                 self.downloadFile(obj["source"]["url"],

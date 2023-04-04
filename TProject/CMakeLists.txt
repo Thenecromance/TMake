@@ -24,7 +24,7 @@ macro(SET_OUTPUT_NAMES prj_name)
     endif()
 endmacro()
 
-#build a auto build project, which will auto include all source from src&include directories 
+# build a auto build project, which will auto include all source from src&include directories
 macro(TProjectBuild prj_name)
     set(FOLDER_NAME ${prj_name})
     set(PROJECT_NAME ${prj_name})
@@ -58,7 +58,7 @@ macro(TProjectBuild prj_name)
     SETUP_GROUPS("${SRC_FILES}")
     SETUP_GROUPS("${HEADER_FILES}")
 
-    # SET_OUTPUT_NAMES(${PROJECT_NAME})
+    SET_OUTPUT_NAMES(${PROJECT_NAME})
     set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER ${FOLDER_NAME})
 
     set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD ${CXXVERSION})
@@ -88,8 +88,8 @@ macro(TBUILD_SHARED prjname)
     TProjectBuild(${prjname})
 endmacro(TBUILD_SHARED prjname)
 
-#add all sub directories in parent_dir
-#@parent_dir: root directory
+# add all sub directories in parent_dir
+# @parent_dir: root directory
 macro(TADD_SUBDIRECTORY parent_dir)
     file(GLOB_RECURSE DIR_LIST LIST_DIRECTORIES true RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${parent_dir})
 
